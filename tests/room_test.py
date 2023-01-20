@@ -72,6 +72,24 @@ class TestRoom(unittest.TestCase):
             "Customer can afford entry.",
             self.room_1.check_customer_can_afford_entry(self.guest_1.cash),
         )
-    
+
     def test_customer_cannot_afford_entry(self):
-        self.assertEqual("Customer can not afford entry.", self.room_1.check_customer_can_afford_entry(self.guest_2.cash))
+        self.assertEqual(
+            "Customer can not afford entry.",
+            self.room_1.check_customer_can_afford_entry(self.guest_2.cash),
+        )
+
+    def test_guest_fav_song_in_song_list(self):
+        self.room_1.add_song_to_song_list("Mr. Blue Sky")
+        self.assertEqual("Whoo!", self.room_1.check_for_fav_song(self.guest_1.fav_song))
+
+    def test_guest_fav_song_not_in_list(self):
+        self.room_1.add_song_to_song_list("Ace of Spades")
+        self.assertEqual(
+            "Song not in list.", self.room_1.check_for_fav_song(self.guest_1.fav_song)
+        )
+
+    def test_entry_fee_proceeds_increases_with_each_check_in(self):
+        self.room_1.check_in_guest(self.guest_1)
+        self.assertEqual(15, self.room_1.entry_fee_proceeds)
+

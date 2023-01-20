@@ -5,10 +5,12 @@ class Room:
         self.entry_fee = entry_fee
         self.song_list = []
         self.guest_list = []
+        self.entry_fee_proceeds = 0
 
     def check_in_guest(self, guest_name):
         if guest_name not in self.guest_list:
             self.guest_list.append(guest_name)
+            self.entry_fee_proceeds += self.entry_fee
         else:
             return f"{guest_name} has already checked-in."
 
@@ -35,3 +37,9 @@ class Room:
             return "Customer can afford entry."
         else:
             return "Customer can not afford entry."
+
+    def check_for_fav_song(self, fav_song):
+        if fav_song in self.song_list:
+            return "Whoo!"
+        else:
+            return "Song not in list."
